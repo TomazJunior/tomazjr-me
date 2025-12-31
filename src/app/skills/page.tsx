@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { skillCategories } from "@/lib/constants";
+import { skillCategories, certifications } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Skills | Tomaz Junior",
@@ -86,8 +86,65 @@ export default function SkillsPage() {
             <span className="text-[var(--text-primary)]">{"};"}</span>
           </p>
 
+          {/* Certifications section */}
+          <div className="mt-8 pt-6 border-t border-[var(--border-color)]">
+            <div className="text-[var(--syntax-comment)] mb-4">
+              <p>{"/**"}</p>
+              <p>{" * Certifications"}</p>
+              <p>{" */"}</p>
+            </div>
+
+            <div className="space-y-2">
+              <p>
+                <span className="text-[var(--syntax-keyword)]">export const</span>
+                <span className="text-[var(--syntax-variable)]"> certifications</span>
+                <span className="text-[var(--text-primary)]">{" = ["}</span>
+              </p>
+            </div>
+
+            <div className="pl-4 space-y-3 py-2">
+              {certifications.map((cert, index) => (
+                <div key={cert.id} className="p-3 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded hover:border-[var(--accent-primary)] transition-colors">
+                  <p>
+                    <span className="text-[var(--text-primary)]">{"{ "}</span>
+                  </p>
+                  <div className="pl-4">
+                    <p>
+                      <span className="text-[var(--syntax-variable)]">name</span>
+                      <span className="text-[var(--text-primary)]">: </span>
+                      <span className="text-[var(--syntax-string)]">&quot;{cert.name}&quot;</span>
+                      <span className="text-[var(--text-primary)]">,</span>
+                    </p>
+                    <p>
+                      <span className="text-[var(--syntax-variable)]">issuer</span>
+                      <span className="text-[var(--text-primary)]">: </span>
+                      <span className="text-[var(--syntax-string)]">&quot;{cert.issuer}&quot;</span>
+                      <span className="text-[var(--text-primary)]">,</span>
+                    </p>
+                    <p>
+                      <span className="text-[var(--syntax-variable)]">issued</span>
+                      <span className="text-[var(--text-primary)]">: </span>
+                      <span className="text-[var(--syntax-string)]">&quot;{cert.issueDate}&quot;</span>
+                      <span className="text-[var(--text-primary)]">,</span>
+                    </p>
+                  </div>
+                  <p>
+                    <span className="text-[var(--text-primary)]">{"}"}</span>
+                    <span className="text-[var(--text-primary)]">
+                      {index < certifications.length - 1 ? "," : ""}
+                    </span>
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <p>
+              <span className="text-[var(--text-primary)]">{"];"}</span>
+            </p>
+          </div>
+
           {/* Comment */}
-          <p className="text-[var(--syntax-comment)]">
+          <p className="text-[var(--syntax-comment)] mt-6">
             {"// Always learning new technologies..."}
           </p>
         </div>

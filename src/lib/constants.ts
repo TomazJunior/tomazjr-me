@@ -186,37 +186,45 @@ export interface SkillCategory {
 export const skillCategories: SkillCategory[] = [
   {
     name: "Frontend",
-    skills: ["React", "TypeScript", "JavaScript", "HTML/CSS"],
+    skills: ["React", "Next.js", "TypeScript", "JavaScript", "HTML/CSS", "Tailwind CSS"],
   },
   {
     name: "Backend",
-    skills: ["Node.js", "Java", "Spring", "REST APIs"],
+    skills: ["Node.js", "Java", "Spring", "REST APIs", "GraphQL"],
   },
   {
-    name: "Database",
-    skills: [
-      "DynamoDB",
-      "MongoDB",
-      "Redis",
-      "MySQL",
-      "PostgreSQL",
-      "SQL Server",
-    ],
+    name: "Database & Messaging",
+    skills: ["DynamoDB", "MongoDB", "Redis", "MySQL", "PostgreSQL", "Kafka"],
   },
   {
     name: "Cloud & DevOps",
-    skills: [
-      "AWS Lambda",
-      "AWS S3",
-      "AWS SQS/SNS",
-      "Serverless",
-      "Docker",
-      "CI/CD",
-    ],
+    skills: ["AWS (Lambda, S3, DynamoDB, SQS, SNS, API Gateway, CloudWatch, IAM)", "Serverless", "Docker", "CI/CD"],
+  },
+  {
+    name: "AI & Machine Learning",
+    skills: ["LLMs", "Prompt Engineering", "Claude API", "OpenAI API", "RAG"],
   },
   {
     name: "Testing",
     skills: ["Cypress", "Jest", "Mocha", "Cucumber", "Jasmine"],
+  },
+];
+
+export interface Certification {
+  id: string;
+  name: string;
+  issuer: string;
+  issueDate: string;
+  expirationDate?: string;
+}
+
+export const certifications: Certification[] = [
+  {
+    id: "aws-developer",
+    name: "AWS Certified Developer - Associate",
+    issuer: "Amazon Web Services",
+    issueDate: "Jun 2018",
+    expirationDate: "Jun 2020",
   },
 ];
 

@@ -1,26 +1,156 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Background */
+  --bg-primary: #1e1e1e;
+  --bg-secondary: #252526;
+  --bg-tertiary: #2d2d2d;
+  --bg-hover: #3c3c3c;
+  --bg-active: #37373d;
+
+  /* Text */
+  --text-primary: #d4d4d4;
+  --text-secondary: #808080;
+  --text-muted: #6e6e6e;
+
+  /* Syntax Colors */
+  --syntax-keyword: #569cd6;
+  --syntax-string: #ce9178;
+  --syntax-function: #dcdcaa;
+  --syntax-number: #b5cea8;
+  --syntax-comment: #6a9955;
+  --syntax-type: #4ec9b0;
+  --syntax-variable: #9cdcfe;
+  --syntax-operator: #d4d4d4;
+
+  /* UI Accents */
+  --accent-primary: #0078d4;
+  --accent-success: #4ec9b0;
+  --accent-warning: #dcdcaa;
+  --accent-error: #f14c4c;
+
+  /* Borders */
+  --border-color: #3c3c3c;
+  --border-focus: #0078d4;
+
+  /* Window Controls */
+  --window-close: #ff5f57;
+  --window-minimize: #febc2e;
+  --window-maximize: #28c840;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-mono: "Consolas", "Monaco", "Fira Code", "JetBrains Mono", monospace;
+
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-tertiary: var(--bg-tertiary);
+  --color-bg-hover: var(--bg-hover);
+  --color-bg-active: var(--bg-active);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
+  --color-syntax-keyword: var(--syntax-keyword);
+  --color-syntax-string: var(--syntax-string);
+  --color-syntax-function: var(--syntax-function);
+  --color-syntax-number: var(--syntax-number);
+  --color-syntax-comment: var(--syntax-comment);
+  --color-syntax-type: var(--syntax-type);
+  --color-syntax-variable: var(--syntax-variable);
+
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-success: var(--accent-success);
+  --color-accent-warning: var(--accent-warning);
+  --color-accent-error: var(--accent-error);
+
+  --color-border: var(--border-color);
+  --color-border-focus: var(--border-focus);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-hover);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4a4a4a;
+}
+
+/* Selection */
+::selection {
+  background: var(--accent-primary);
+  color: white;
+}
+
+/* Blinking Cursor Animation */
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Line Numbers */
+.line-number {
+  color: var(--text-secondary);
+  user-select: none;
+  text-align: right;
+  padding-right: 1rem;
+  min-width: 3rem;
+}
+
+/* Focus Styles */
+input:focus,
+textarea:focus,
+button:focus-visible {
+  outline: 1px solid var(--accent-primary);
+  outline-offset: 0;
+}
+
+/* Link Styles */
+a {
+  color: var(--syntax-variable);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--accent-success);
+  text-decoration: underline;
 }

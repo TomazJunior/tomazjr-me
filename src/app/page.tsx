@@ -1,65 +1,187 @@
-import Image from "next/image";
+"use client";
+
+import Link from "next/link";
+import { ArrowRight, Folder, FileCode } from "lucide-react";
+import { TypingAnimation } from "@/components/features";
+import { siteConfig, projects } from "@/lib/constants";
 
 export default function Home() {
+  const roles = [
+    "Software Engineer at HubSpot",
+    "Building web applications",
+    "AWS enthusiast",
+  ];
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="p-6 md:p-8 max-w-4xl mx-auto">
+      {/* Line numbers container */}
+      <div className="flex">
+        <div className="hidden md:block pr-4 border-r border-[var(--border-color)] mr-4 text-[var(--text-secondary)] select-none">
+          {Array.from({ length: 30 }, (_, i) => (
+            <div key={i} className="text-right text-xs leading-6">
+              {i + 1}
+            </div>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="flex-1 space-y-6">
+          {/* Comment header */}
+          <div className="text-[var(--syntax-comment)]">
+            <p>{"/**"}</p>
+            <p>{" * Personal Portfolio"}</p>
+            <p>{" * @author Tomaz Junior"}</p>
+            <p>{" */"}</p>
+          </div>
+
+          {/* Import statements */}
+          <div className="space-y-1">
+            <p>
+              <span className="text-[var(--syntax-keyword)]">import</span>
+              <span className="text-[var(--text-primary)]">{" { "}</span>
+              <span className="text-[var(--syntax-variable)]">developer</span>
+              <span className="text-[var(--text-primary)]">{" } "}</span>
+              <span className="text-[var(--syntax-keyword)]">from</span>
+              <span className="text-[var(--syntax-string)]">
+                {" '@hubspot'"}
+              </span>
+              <span className="text-[var(--text-primary)]">;</span>
+            </p>
+            <p>
+              <span className="text-[var(--syntax-keyword)]">import</span>
+              <span className="text-[var(--text-primary)]">{" { "}</span>
+              <span className="text-[var(--syntax-variable)]">projects</span>
+              <span className="text-[var(--text-primary)]">{", "}</span>
+              <span className="text-[var(--syntax-variable)]">skills</span>
+              <span className="text-[var(--text-primary)]">{" } "}</span>
+              <span className="text-[var(--syntax-keyword)]">from</span>
+              <span className="text-[var(--syntax-string)]">
+                {" './portfolio'"}
+              </span>
+              <span className="text-[var(--text-primary)]">;</span>
+            </p>
+          </div>
+
+          {/* Main content */}
+          <div className="space-y-2">
+            <p>
+              <span className="text-[var(--syntax-keyword)]">const</span>
+              <span className="text-[var(--syntax-variable)]">
+                {" "}
+                {siteConfig.name.replace(" ", "")}
+              </span>
+              <span className="text-[var(--text-primary)]">{" = {"}</span>
+            </p>
+
+            <div className="pl-4 space-y-1">
+              <p>
+                <span className="text-[var(--syntax-variable)]">name</span>
+                <span className="text-[var(--text-primary)]">: </span>
+                <span className="text-[var(--syntax-string)]">
+                  {`"${siteConfig.name}"`}
+                </span>
+                <span className="text-[var(--text-primary)]">,</span>
+              </p>
+              <p>
+                <span className="text-[var(--syntax-variable)]">role</span>
+                <span className="text-[var(--text-primary)]">: </span>
+                <span className="text-[var(--syntax-string)]">{'"'}</span>
+                <span className="text-[var(--syntax-string)]">
+                  <TypingAnimation texts={roles} />
+                </span>
+                <span className="text-[var(--syntax-string)]">{'"'}</span>
+                <span className="text-[var(--text-primary)]">,</span>
+              </p>
+              <p>
+                <span className="text-[var(--syntax-variable)]">company</span>
+                <span className="text-[var(--text-primary)]">: </span>
+                <span className="text-[var(--syntax-string)]">
+                  {`"${siteConfig.company}"`}
+                </span>
+                <span className="text-[var(--text-primary)]">,</span>
+              </p>
+            </div>
+
+            <p>
+              <span className="text-[var(--text-primary)]">{"}"}</span>
+              <span className="text-[var(--text-primary)]">;</span>
+            </p>
+          </div>
+
+          {/* Description comment */}
+          <div className="text-[var(--syntax-comment)] mt-8">
+            <p>
+              {"// Building digital experiences with modern web technologies"}
+            </p>
+          </div>
+
+          {/* Quick links section */}
+          <div className="mt-8 space-y-4">
+            <p className="text-[var(--syntax-comment)]">
+              {"// Quick navigation"}
+            </p>
+
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/projects"
+                className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded hover:bg-[var(--bg-hover)] hover:border-[var(--accent-primary)] transition-colors no-underline group"
+              >
+                <Folder size={16} className="text-[var(--syntax-function)]" />
+                <span className="text-[var(--text-primary)]">projects/</span>
+                <ArrowRight
+                  size={14}
+                  className="text-[var(--text-secondary)] group-hover:text-[var(--accent-success)] transition-colors"
+                />
+              </Link>
+
+              <Link
+                href="/contact"
+                className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded hover:bg-[var(--bg-hover)] hover:border-[var(--accent-primary)] transition-colors no-underline group"
+              >
+                <FileCode size={16} className="text-[var(--syntax-keyword)]" />
+                <span className="text-[var(--text-primary)]">contact.tsx</span>
+                <ArrowRight
+                  size={14}
+                  className="text-[var(--text-secondary)] group-hover:text-[var(--accent-success)] transition-colors"
+                />
+              </Link>
+            </div>
+          </div>
+
+          {/* Featured projects preview */}
+          <div className="mt-8 space-y-4">
+            <p className="text-[var(--syntax-comment)]">
+              {"// Most recent featured projects"}
+            </p>
+            <div className="space-y-2">
+              <p>
+                <span className="text-[var(--syntax-keyword)]">
+                  export const
+                </span>
+                <span className="text-[var(--syntax-variable)]"> featured</span>
+                <span className="text-[var(--text-primary)]">{" = ["}</span>
+              </p>
+              <div className="pl-4 space-y-1">
+                {projects.slice(0, 3).map((project, index) => (
+                  <p key={project.id}>
+                    <span className="text-[var(--syntax-string)]">
+                      {`"${project.title}"`}
+                    </span>
+                    <span className="text-[var(--text-primary)]">
+                      {index < 2 ? "," : ""}
+                    </span>
+                    <span className="text-[var(--syntax-comment)]">
+                      {` // ${project.url.replace("https://", "")}`}
+                    </span>
+                  </p>
+                ))}
+              </div>
+              <p>
+                <span className="text-[var(--text-primary)]">{"];"}</span>
+              </p>
+            </div>
+          </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

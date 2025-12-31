@@ -8,22 +8,24 @@ const contactSchema = z.object({
   message: z.string().min(10),
 });
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
     const validated = contactSchema.parse(data);
 
-    // Check if Resend API key is configured
-    if (!process.env.RESEND_API_KEY) {
-      console.log("Contact form submission (no email configured):", validated);
+    // Check if email is configured
+    const { RESEND_API_KEY, RESEND_FROM_EMAIL, CONTACT_EMAIL } = process.env;
+    if (!RESEND_API_KEY || !RESEND_FROM_EMAIL || !CONTACT_EMAIL) {
+      console.log("Contact form submission (email not configured):", validated);
       return NextResponse.json({ success: true });
     }
 
+    // Instantiate inside handler to avoid build-time evaluation
+    const resend = new Resend(RESEND_API_KEY);
+
     await resend.emails.send({
-      from: "Portfolio Contact <onboarding@resend.dev>",
-      to: process.env.CONTACT_EMAIL || "delivered@resend.dev",
+      from: RESEND_FROM_EMAIL,
+      to: CONTACT_EMAIL,
       subject: `Portfolio Contact: ${validated.name}`,
       text: `
 Name: ${validated.name}

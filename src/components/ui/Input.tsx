@@ -28,7 +28,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         {error && (
-          <p className="text-xs text-[var(--accent-error)]">{error}</p>
+          <p role="alert" className="text-xs text-[var(--accent-error)]">{error}</p>
         )}
       </div>
     );

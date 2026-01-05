@@ -93,6 +93,8 @@ export function ContactForm() {
 
           {status !== "idle" && (
             <div
+              role="alert"
+              aria-live="polite"
               className={`flex items-center gap-2 text-sm ${
                 status === "success"
                   ? "text-[var(--accent-success)]"

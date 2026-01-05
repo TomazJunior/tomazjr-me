@@ -16,7 +16,9 @@ export async function POST(request: NextRequest) {
     // Check if email is configured
     const { RESEND_API_KEY, RESEND_FROM_EMAIL, CONTACT_EMAIL } = process.env;
     if (!RESEND_API_KEY || !RESEND_FROM_EMAIL || !CONTACT_EMAIL) {
-      console.log("Contact form submission (email not configured):", validated);
+      if (process.env.NODE_ENV === "development") {
+        console.log("Contact form submission (email not configured):", validated);
+      }
       return NextResponse.json({ success: true });
     }
 
@@ -39,7 +41,9 @@ ${validated.message}
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Contact form error:", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("Contact form error:", error);
+    }
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(

@@ -7,7 +7,7 @@ import { siteConfig, projects } from "@/lib/constants";
 
 export default function Home() {
   const roles = [
-    "Software Engineer at HubSpot",
+    "Senior Software Engineer at HubSpot",
     "Building web applications",
     "AWS enthusiast",
   ];

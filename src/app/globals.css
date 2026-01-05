@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./theme-regular.css";
 
 :root {
   /* Background */
@@ -41,6 +42,7 @@
 
 @theme inline {
   --font-mono: "Consolas", "Monaco", "Fira Code", "JetBrains Mono", monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
   --color-bg-primary: var(--bg-primary);
   --color-bg-secondary: var(--bg-secondary);

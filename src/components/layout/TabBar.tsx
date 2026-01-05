@@ -1,16 +1,28 @@
 "use client";
 
-import { FileCode, X } from "lucide-react";
+import { FileCode, X, ChevronRight, Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { navItems } from "@/lib/constants";
 import { useTabs } from "@/contexts/TabsContext";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useSidebar } from "@/contexts/SidebarContext";
 
 export function TabBar() {
   const { openTabs, activeTab, openTab, closeTab } = useTabs();
+  const { isGeek } = useTheme();
+  const { setMobileOpen } = useSidebar();
 
   // Get tab info from navItems
   const getTabInfo = (path: string) => {
     return navItems.find((item) => item.path === path);
+  };
+
+  // Get current page name for breadcrumb
+  const getCurrentPageName = () => {
+    const item = getTabInfo(activeTab);
+    if (!item) return "Home";
+    const cleanName = item.name.replace(".tsx", "");
+    return cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
   };
 
   // Sort open tabs by their order in navItems
@@ -32,6 +44,28 @@ export function TabBar() {
     closeTab(path);
   };
 
+  // Regular mode: Simple breadcrumb
+  if (!isGeek) {
+    return (
+      <nav className="flex items-center gap-1 px-4 py-3 bg-[var(--bg-secondary)] border-b border-[var(--border-color)]">
+        {/* Mobile hamburger button */}
+        <button
+          onClick={() => setMobileOpen(true)}
+          className="md:hidden p-1 mr-2 hover:bg-[var(--bg-hover)] rounded transition-colors"
+          aria-label="Open navigation"
+        >
+          <Menu size={20} className="text-[var(--text-primary)]" />
+        </button>
+        <span className="text-[var(--text-secondary)]">Tomaz Junior</span>
+        <ChevronRight size={14} className="text-[var(--text-muted)]" />
+        <span className="text-[var(--accent-primary)] font-medium">
+          {getCurrentPageName()}
+        </span>
+      </nav>
+    );
+  }
+
+  // Geek mode: IDE-style tabs
   return (
     <div className="flex bg-[var(--bg-secondary)] border-b border-[var(--border-color)] overflow-x-auto">
       {sortedTabs.map((item) => {

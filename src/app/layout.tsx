@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Terminal, TabBar, StatusBar, Sidebar } from "@/components/layout";
 import { TabsProvider } from "@/contexts/TabsContext";
+import { ThemeProvider } from "@/contexts/ThemeContext";
+import { SidebarProvider } from "@/contexts/SidebarContext";
 import "./globals.css";
 
 const siteTitle = "Tomaz Junior | Senior Software Engineer";
@@ -81,18 +83,22 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <TabsProvider>
-          <Terminal>
-            <div className="flex flex-1 overflow-hidden">
-              <Sidebar />
-              <div className="flex flex-col flex-1 overflow-hidden">
-                <TabBar />
-                <main className="flex-1 overflow-auto">{children}</main>
-              </div>
-            </div>
-            <StatusBar />
-          </Terminal>
-        </TabsProvider>
+        <ThemeProvider>
+          <SidebarProvider>
+            <TabsProvider>
+              <Terminal>
+                <div className="flex flex-1 overflow-hidden">
+                  <Sidebar />
+                  <div className="flex flex-col flex-1 overflow-hidden">
+                    <TabBar />
+                    <main className="flex-1 overflow-auto">{children}</main>
+                  </div>
+                </div>
+                <StatusBar />
+              </Terminal>
+            </TabsProvider>
+          </SidebarProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

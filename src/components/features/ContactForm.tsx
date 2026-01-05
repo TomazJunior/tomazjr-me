@@ -6,6 +6,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Send, CheckCircle, AlertCircle } from "lucide-react";
 import { Input, Textarea, Button } from "@/components/ui";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -18,6 +19,7 @@ type ContactFormData = z.infer<typeof contactSchema>;
 export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [statusMessage, setStatusMessage] = useState("");
+  const { isGeek } = useTheme();
 
   const {
     register,
@@ -47,6 +49,68 @@ export function ContactForm() {
     }
   };
 
+  const StatusMessage = () =>
+    status !== "idle" ? (
+      <div
+        role="alert"
+        aria-live="polite"
+        className={`flex items-center gap-2 text-sm ${
+          status === "success"
+            ? "text-[var(--accent-success)]"
+            : "text-[var(--accent-error)]"
+        }`}
+      >
+        {status === "success" ? (
+          <CheckCircle size={16} />
+        ) : (
+          <AlertCircle size={16} />
+        )}
+        <span>{statusMessage}</span>
+      </div>
+    ) : null;
+
+  // Regular mode: Standard form layout
+  if (!isGeek) {
+    return (
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <Input
+          label="Name"
+          placeholder="Your name"
+          {...register("name")}
+          error={errors.name?.message}
+        />
+
+        <Input
+          label="Email"
+          type="email"
+          placeholder="your@email.com"
+          {...register("email")}
+          error={errors.email?.message}
+        />
+
+        <Textarea
+          label="Message"
+          placeholder="Your message..."
+          rows={5}
+          {...register("message")}
+          error={errors.message?.message}
+        />
+
+        <div className="flex items-center gap-4 pt-2">
+          <Button type="submit" isLoading={isSubmitting}>
+            <span className="flex items-center gap-2">
+              <Send size={14} />
+              <span>Send Message</span>
+            </span>
+          </Button>
+
+          <StatusMessage />
+        </div>
+      </form>
+    );
+  }
+
+  // Geek mode: Code-style form
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       {/* Form code-style header */}
@@ -91,24 +155,7 @@ export function ContactForm() {
             </span>
           </Button>
 
-          {status !== "idle" && (
-            <div
-              role="alert"
-              aria-live="polite"
-              className={`flex items-center gap-2 text-sm ${
-                status === "success"
-                  ? "text-[var(--accent-success)]"
-                  : "text-[var(--accent-error)]"
-              }`}
-            >
-              {status === "success" ? (
-                <CheckCircle size={16} />
-              ) : (
-                <AlertCircle size={16} />
-              )}
-              <span>{statusMessage}</span>
-            </div>
-          )}
+          <StatusMessage />
         </div>
       </div>
 

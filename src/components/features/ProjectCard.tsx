@@ -1,5 +1,8 @@
+"use client";
+
 import { ExternalLink } from "lucide-react";
 import type { Project } from "@/lib/constants";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface ProjectCardProps {
   project: Project;
@@ -7,6 +10,30 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, index }: ProjectCardProps) {
+  const { isGeek } = useTheme();
+
+  // Regular mode: Clean card layout
+  if (!isGeek) {
+    return (
+      <div className="border border-[var(--border-color)] rounded-lg bg-[var(--bg-secondary)] p-5 hover:shadow-md hover:border-[var(--accent-primary)] transition-all">
+        <h3 className="text-lg font-semibold text-[var(--text-primary)]">
+          {project.title}
+        </h3>
+        <p className="text-[var(--text-secondary)] mt-2">{project.description}</p>
+        <a
+          href={project.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 mt-4 text-sm text-[var(--accent-primary)] hover:underline no-underline"
+        >
+          <ExternalLink size={14} />
+          <span>{project.url.replace("https://", "")}</span>
+        </a>
+      </div>
+    );
+  }
+
+  // Geek mode: Code-style card
   return (
     <div className="border border-[var(--border-color)] rounded bg-[var(--bg-secondary)] overflow-hidden hover:border-[var(--accent-primary)] transition-colors">
       {/* File tab header */}

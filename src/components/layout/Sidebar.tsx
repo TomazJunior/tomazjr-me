@@ -7,35 +7,50 @@ import {
   ChevronDown,
   ChevronRight,
   Files,
-  Menu,
   X,
+  LayoutList,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { navItems } from "@/lib/constants";
 import { useTabs } from "@/contexts/TabsContext";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useSidebar } from "@/contexts/SidebarContext";
+import { ThemeToggle } from "@/components/features";
 
 export function Sidebar() {
   const [isExpanded, setIsExpanded] = useState(true);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const { isMobileOpen, setMobileOpen } = useSidebar();
   const pathname = usePathname();
   const { openTab, isTabOpen } = useTabs();
+  const { isGeek } = useTheme();
 
   const handleItemClick = (path: string) => {
     openTab(path);
-    setIsMobileOpen(false);
+    setMobileOpen(false);
+  };
+
+  // Get display name based on theme
+  const getDisplayName = (name: string) => {
+    if (isGeek) return name;
+    // Remove .tsx extension and capitalize first letter
+    const cleanName = name.replace(".tsx", "");
+    return cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
   };
 
   const SidebarContent = () => (
     <>
+      {/* Theme Toggle */}
+      <ThemeToggle />
+
       {/* Sidebar Header */}
       <div className="flex items-center justify-between px-3 py-2 border-b border-[var(--border-color)]">
         <div className="flex items-center gap-2 text-[10px] text-[var(--text-secondary)] uppercase tracking-wider">
-          <Files size={14} />
-          <span>Explorer</span>
+          {isGeek ? <Files size={14} /> : <LayoutList size={14} />}
+          <span>{isGeek ? "Explorer" : "Navigation"}</span>
         </div>
         {/* Mobile close button */}
         <button
-          onClick={() => setIsMobileOpen(false)}
+          onClick={() => setMobileOpen(false)}
           className="md:hidden p-1 hover:bg-[var(--bg-hover)] rounded transition-colors"
           aria-label="Close sidebar"
         >
@@ -45,17 +60,19 @@ export function Sidebar() {
 
       {/* Project Section */}
       <div className="py-1">
-        <button
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="flex items-center gap-1 w-full px-2 py-1 text-[11px] text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] transition-colors uppercase tracking-wide font-semibold"
-        >
-          {isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-          <span>tomazjr-me</span>
-        </button>
+        {isGeek && (
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="flex items-center gap-1 w-full px-2 py-1 text-[11px] text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] transition-colors uppercase tracking-wide font-semibold"
+          >
+            {isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+            <span>tomazjr-me</span>
+          </button>
+        )}
 
         {/* Navigation Items */}
-        {isExpanded && (
-          <div className="pl-2">
+        {(isGeek ? isExpanded : true) && (
+          <div className={isGeek ? "pl-2" : ""}>
             {navItems.map((item) => {
               const isActive = pathname === item.path;
               const isOpen = isTabOpen(item.path);
@@ -71,15 +88,17 @@ export function Sidebar() {
                       : "text-[var(--text-secondary)]"
                   )}
                 >
-                  <FileCode
-                    size={14}
-                    className={cn(
-                      isOpen
-                        ? "text-[var(--syntax-keyword)]"
-                        : "text-[var(--text-muted)]"
-                    )}
-                  />
-                  <span>{item.name}</span>
+                  {isGeek && (
+                    <FileCode
+                      size={14}
+                      className={cn(
+                        isOpen
+                          ? "text-[var(--syntax-keyword)]"
+                          : "text-[var(--text-muted)]"
+                      )}
+                    />
+                  )}
+                  <span>{getDisplayName(item.name)}</span>
                 </button>
               );
             })}
@@ -91,20 +110,11 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Mobile hamburger button */}
-      <button
-        onClick={() => setIsMobileOpen(true)}
-        className="md:hidden fixed top-2 left-2 z-50 p-2 bg-[var(--bg-tertiary)] border border-[var(--border-color)] rounded hover:bg-[var(--bg-hover)] transition-colors"
-        aria-label="Open navigation"
-      >
-        <Menu size={20} className="text-[var(--text-primary)]" />
-      </button>
-
       {/* Mobile backdrop */}
       {isMobileOpen && (
         <div
           className="md:hidden fixed inset-0 bg-black/50 z-40"
-          onClick={() => setIsMobileOpen(false)}
+          onClick={() => setMobileOpen(false)}
         />
       )}
 
